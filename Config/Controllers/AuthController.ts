@@ -23,6 +23,7 @@ class Authencation {
                     },
                     process.env.TOKEN_SECRET,
                     {
+                         algorithm: process.env.JWT_ALGORITHM,
                          expiresIn: '1d',
                     },
                     (err: any, token: string) => {

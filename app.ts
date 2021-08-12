@@ -1,6 +1,5 @@
 require('dotenv').config()
-require('./Config/Database/Dbconnection')
-
+import './Config/Database/Dbconnection'
 import express, { Request, Response } from 'express'
 const app = express()
 
