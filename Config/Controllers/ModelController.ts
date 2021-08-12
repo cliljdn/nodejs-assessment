@@ -1,3 +1,5 @@
+import { Types } from 'mongoose'
+
 interface ObjectHasID {
      _id?: string
 }
@@ -13,19 +15,19 @@ export default class ModelController {
           return await this._model.create(body)
      }
 
-     public update = async (body: ObjectHasID) => {
-          return await this._model.updateOne({ _id: body._id }, body)
+     public update = async (body: ObjectHasID, _id: string) => {
+          return await this._model.updateOne({ _id: Types.ObjectId(_id) }, body)
      }
 
-     public delete = async (body: ObjectHasID) => {
-          return await this._model.deleteOne({ _id: body._id })
+     public delete = async (_id: string) => {
+          return await this._model.deleteOne({ _id: _id })
      }
 
-     public findAll = async () => {
-          return await this._model.find({})
+     public findAll = async (query: object = {}) => {
+          return await this._model.find(query)
      }
 
      public findById = async (_id: string) => {
-          return await this._model.find({ _id: _id })
+          return await this._model.find({ _id: Types.ObjectId(_id) })
      }
 }

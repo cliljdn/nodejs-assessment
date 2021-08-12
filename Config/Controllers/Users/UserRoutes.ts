@@ -10,9 +10,27 @@ class UserRoutes extends ModelController {
           res: TypeResponse,
           next: TypeNext
      ) => {
-          const newUser = await this.create(req.body)
+          try {
+               const newUser = await this.create(req.body)
 
-          if(newUser) 
+               if (newUser) res.json('user created')
+          } catch (err) {
+               next(err)
+          }
+     }
+
+     public UserUpdateRoute = async (
+          req: TypeRequest,
+          res: TypeResponse,
+          next: TypeNext
+     ) => {
+          try {
+               const newUser = await this.update(req.body)
+
+               if (newUser) res.json('user created')
+          } catch (err) {
+               next(err)
+          }
      }
 }
 
