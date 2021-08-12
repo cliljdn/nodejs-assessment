@@ -22,8 +22,13 @@ const UserSchema: Schema = new Schema(
           contact_number: stringRequired,
           email: stringRequired,
           department: {
-               type: Object,
-               default: {},
+               type: Schema.Types.ObjectId,
+               ref: schemaNames.departmentSchema,
+          },
+
+          address: {
+               type: Schema.Types.ObjectId,
+               ref: schemaNames.addressSchema,
           },
      },
      { timestamps: true }

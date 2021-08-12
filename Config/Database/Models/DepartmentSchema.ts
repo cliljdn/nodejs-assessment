@@ -9,6 +9,7 @@ const stringRequired: object = {
 interface DepartmentInterface extends Document {
      dept_name: string
      dept_location: string
+     timestamps: string
 }
 
 const departmentSchema: Schema = new Schema(

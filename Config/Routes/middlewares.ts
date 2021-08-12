@@ -1,12 +1,11 @@
-import { Request, Response, NextFunction } from 'express'
-
 interface ErrorObject {
      message: string
+
      stack: string
 }
 
 module.exports = {
-     notFound: (req: Request, res: Response, next: NextFunction) => {
+     notFound: (req: TypeRequest, res: TypeResponse, next: TypeNext) => {
           const error = new Error(`Not Found - ${req.originalUrl}`)
           res.status(404)
           next(error)
@@ -15,9 +14,9 @@ module.exports = {
      // eslint-disable-next-line no-unused-vars
      errorHandler: (
           error: ErrorObject,
-          req: Request,
-          res: Response,
-          next: NextFunction
+          req: TypeRequest,
+          res: TypeResponse,
+          next: TypeNext
      ) => {
           const statusCode = res.statusCode === 200 ? 500 : res.statusCode
           res.status(statusCode)
