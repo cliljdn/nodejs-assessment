@@ -26,7 +26,7 @@ class ModelController {
      public findById = async (_id: string) => {
           return await this._model
                .find({ _id: Types.ObjectId(_id) })
-               .populate('address')
+               .populate(['address', 'department'])
      }
 }
 

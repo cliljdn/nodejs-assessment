@@ -1,16 +1,18 @@
+export {}
 const ModelController = require('../ModelController')
-const AddressModel = require('../../Database/Models/AddressSchema')
+const DepartmentSchema = require('../../Database/Models/DepartmentSchema')
 const validation = require('../ValidationController')
 const auth = require('../AuthController')
 const UserControler = require('../Users/UserRoutes')
-class AddressRoutes extends ModelController {
-     private _address: MongooseModel
+
+class DepartmentRoutes extends ModelController {
+     private _dept: MongooseModel
      constructor(model: MongooseModel) {
           super(model)
-          this._address = model
+          this._dept = model
      }
 
-     public addAddress = async (
+     public addDepartment = async (
           req: TypeRequest,
           res: TypeResponse,
           next: TypeNext
@@ -22,27 +24,28 @@ class AddressRoutes extends ModelController {
 
                const user = await UserControler._user
                     .findOne({ _id: token.id })
-                    .populate('address')
+                    .populate('department')
 
-               if (user.address) throw new Error('User already has an address')
+               if (user.department)
+                    throw new Error('User already has an Department')
 
-               const address = await this.create(req.body)
+               const department = await this.create(req.body)
 
-               const newAddress = await UserControler._user
+               const newDepartment = await UserControler._user
                     .findOneAndUpdate(
                          { _id: token.id },
-                         { address: address },
+                         { department: department },
                          { new: true }
                     )
-                    .populate('address')
+                    .populate('department')
 
-               res.status(200).json(newAddress)
+               res.status(200).json(newDepartment)
           } catch (err) {
                next(err)
           }
      }
 
-     public updateAddress = async (
+     public updateDept = async (
           req: TypeRequest,
           res: TypeResponse,
           next: TypeNext
@@ -52,21 +55,21 @@ class AddressRoutes extends ModelController {
 
                const user = await UserControler._user
                     .findOne({ _id: token.id })
-                    .populate('address')
+                    .populate('department', 'address')
 
-               const updatedAddress = await this._address.findOneAndUpdate(
-                    { _id: user.address._id },
+               const updatedDept = await this._dept.findOneAndUpdate(
+                    { _id: user.department._id },
                     req.body,
                     { new: true }
                )
 
-               res.status(200).json(updatedAddress)
+               res.status(200).json(updatedDept)
           } catch (err) {
                next(err)
           }
      }
 
-     public deleteAddress = async (
+     public deleteDept = async (
           req: TypeRequest,
           res: TypeResponse,
           next: TypeNext
@@ -76,10 +79,10 @@ class AddressRoutes extends ModelController {
 
                const user = await UserControler._user
                     .findById(token.id)
-                    .populate('address')
+                    .populate('department')
 
-               await this._address.deleteOne({
-                    _id: user.address._id,
+               await this._dept.deleteOne({
+                    _id: user.department._id,
                })
 
                res.status(200).json('deleted')
@@ -89,4 +92,4 @@ class AddressRoutes extends ModelController {
      }
 }
 
-module.exports = new AddressRoutes(AddressModel)
+module.exports = new DepartmentRoutes(DepartmentSchema)
