@@ -1,9 +1,5 @@
 import { Types } from 'mongoose'
 
-interface ObjectHasID {
-     _id?: string
-}
-
 export default class ModelController {
      private _model: MongooseModel
 
@@ -15,7 +11,7 @@ export default class ModelController {
           return await this._model.create(body)
      }
 
-     public update = async (body: ObjectHasID, _id: string) => {
+     public update = async (body: object, _id: string) => {
           return await this._model.updateOne({ _id: Types.ObjectId(_id) }, body)
      }
 
@@ -23,7 +19,7 @@ export default class ModelController {
           return await this._model.deleteOne({ _id: _id })
      }
 
-     public findAll = async (query: object = {}) => {
+     public find = async (query: object = {}) => {
           return await this._model.find(query)
      }
 

@@ -6,7 +6,7 @@ const stringRequired: object = {
      require: true,
 }
 
-interface DepartmentInterface extends Document {
+export interface DepartmentInterface extends Document {
      dept_name: string
      dept_location: string
      timestamps: string

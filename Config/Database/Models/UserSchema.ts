@@ -6,21 +6,22 @@ const stringRequired: object = {
      require: true,
 }
 
-interface UserInterface extends Document {
-     fname: string
-     lname: string
+export interface UserInterface extends Document {
+     username: string
+     password: string
+     fullname: string
      contact_number: string
-     email: string
-     department?: object
+     department?: string
+     address?: string
      timestamps: string
 }
 
 const UserSchema: Schema = new Schema(
      {
-          fname: stringRequired,
-          lname: stringRequired,
+          username: stringRequired,
+          password: stringRequired,
+          fullname: stringRequired,
           contact_number: stringRequired,
-          email: stringRequired,
           department: {
                type: Schema.Types.ObjectId,
                ref: schemaNames.departmentSchema,

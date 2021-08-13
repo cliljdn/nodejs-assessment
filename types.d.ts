@@ -1,7 +1,10 @@
 import { Model, Schema, Types, Document } from 'mongoose'
 import { Request, Response, NextFunction } from 'express'
 
-declare function ExpressRoute(req: Request, res: Response, next: NextFunction)
+interface SchemaDic {
+     [key: string]: object
+}
+
 declare global {
      type MongooseModel = Model<Schema>
 

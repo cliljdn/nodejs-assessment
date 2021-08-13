@@ -5,7 +5,11 @@ interface payload {
      id: string
 }
 
+const secret = process.env.TOKEN_SECRET?.split(',')
+     .join('\n')
+     .replace(/["']/g, '')
 class Authencation {
+     // each request needs to have a Authorization header
      public isAuthenticated = async (req: Request) => {
           const encrypted: string = req.headers['authorization']!
           if (!encrypted) throw new Error('No Auth Provided')
@@ -15,15 +19,15 @@ class Authencation {
           return decodedObj
      }
 
-     private sign = (payload: payload) => {
+     public sign = (payload: payload) => {
           return new Promise<string>((resolve, reject) => {
                return jwt.sign(
                     {
                          id: payload.id,
                     },
-                    process.env.TOKEN_SECRET,
+                    secret,
                     {
-                         algorithm: process.env.JWT_ALGORITHM,
+                         algorithm: 'RS256',
                          expiresIn: '1d',
                     },
                     (err: any, token: string) => {
@@ -33,15 +37,11 @@ class Authencation {
           })
      }
 
-     private verify = (token: string) => {
+     public verify = (token: string) => {
           return new Promise<object>((resolve, reject) => {
-               return jwt.verify(
-                    token,
-                    process.env.TOKEN_SECRET,
-                    (err: any, decoded: object) => {
-                         return err ? reject(err) : resolve(decoded)
-                    }
-               )
+               return jwt.verify(token, secret, (err: any, decoded: object) => {
+                    return err ? reject(err) : resolve(decoded)
+               })
           })
      }
 }

@@ -6,7 +6,7 @@ const stringRequired: object = {
      require: true,
 }
 
-interface AddressInterface extends Document {
+export interface AddressInterface extends Document {
      street: string
      lot_number: string
      state: string
