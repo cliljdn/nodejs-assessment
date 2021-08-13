@@ -21,17 +21,19 @@ class MigrationController {
           console.log(`${this._modelName} is rolledback`)
           if (isDeleted) {
                const inserted = await this._model?.insertMany(seed)
-               if (inserted) console.log(`seed executed at ${this._modelName}`)
+               if (inserted) {
+                    console.log(`seed executed at ${this._modelName}`)
+               }
           }
      }
 
      public hashPass = async (details: any) => {
           for (let detail of details) {
-               detail.password = await auth.sign(detail.password)
+               detail.password = await auth.sign({ id: detail.password })
           }
 
           return details
      }
 }
 
-export default MigrationController
+module.exports = MigrationController

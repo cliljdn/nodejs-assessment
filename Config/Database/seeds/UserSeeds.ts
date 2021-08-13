@@ -44,4 +44,4 @@ const userDetails: UserSeedInterface[] = [
      },
 ]
 
-export default userDetails
+module.exports = userDetails

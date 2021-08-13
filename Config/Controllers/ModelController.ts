@@ -1,6 +1,6 @@
 import { Types } from 'mongoose'
 
-export default class ModelController {
+class ModelController {
      private _model: MongooseModel
 
      constructor(model: MongooseModel) {
@@ -20,10 +20,14 @@ export default class ModelController {
      }
 
      public find = async (query: object = {}) => {
-          return await this._model.find(query)
+          return await this._model.find({ ...query })
      }
 
      public findById = async (_id: string) => {
-          return await this._model.find({ _id: Types.ObjectId(_id) })
+          return await this._model
+               .find({ _id: Types.ObjectId(_id) })
+               .populate('address')
      }
 }
+
+module.exports = ModelController

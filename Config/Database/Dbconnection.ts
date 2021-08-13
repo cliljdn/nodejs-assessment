@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 mongoose.connect(String(process.env.MONGODB_URI), {
      useNewUrlParser: true,
      useUnifiedTopology: true,
+     useFindAndModify: false,
 })
 
 const db = mongoose.connection
