@@ -6,7 +6,7 @@ class Validation {
      private _regex_test = /(?=.*[A-Z])(?=.*\d)/
 
      public testUsername(name: string) {
-          if (!this._regex_test.test(name) && name.length < 8) {
+          if (!this._regex_test.test(name) || name.length < 8) {
                throw new Error(
                     'Username must be a minimum of 8 characters and contain at least 1 uppercase letter and number'
                )
@@ -14,7 +14,7 @@ class Validation {
      }
 
      public testPassword(pass: string) {
-          if (!this._regex_test.test(pass) && pass.length < 8) {
+          if (!this._regex_test.test(pass) || pass.length < 8) {
                throw new Error(
                     'Password must be a minimum of 8 characters and contain at least 1 uppercase letter and number'
                )
